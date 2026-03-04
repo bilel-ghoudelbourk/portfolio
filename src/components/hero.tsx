@@ -43,7 +43,7 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
+        <div className="flex flex-col gap-10 sm:grid sm:grid-cols-[1.08fr_0.92fr] sm:gap-14">
           <div>
             <motion.p
               variants={fadeUp}
@@ -99,7 +99,7 @@ export function Hero() {
               initial="hidden"
               animate="show"
               custom={4}
-              className="mt-8 flex flex-col gap-4 lg:grid lg:grid-cols-3"
+              className="mt-8 flex flex-col gap-4 sm:grid sm:grid-cols-3"
             >
               {roles.map((role) => (
                 <div key={role.label} className="card card-hover flex min-h-[140px] flex-col justify-between p-5">
@@ -157,7 +157,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
-            className="flex flex-col gap-4 pt-2 sm:max-w-md sm:mx-auto lg:max-w-none lg:mx-0"
+            className="flex flex-col gap-4 pt-2 sm:max-w-none sm:mx-0"
           >
             <div className="card card-hover p-4 sm:p-5">
               <div className="surface-accent relative aspect-[4/5] overflow-hidden rounded-2xl">
