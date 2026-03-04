@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+/* Class-based dark mode — used by next-themes (attribute="class") */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens*/
+:root {
+  /* Light mode */
+  --background: 248 243 255;
+  --background-elevated: 255 250 255;
+  --foreground: 31 23 53;
+
+  --card: 255 255 255;
+  --card-alpha: 0.72;
+  --card-strong: 255 255 255;
+  --card-strong-alpha: 0.92;
+
+  --border: 141 96 255;
+  --border-alpha: 0.18;
+
+  --muted: 102 88 133;
+  --muted-alpha: 0.86;
+
+  --accent: 145 96 255;
+  --accent-alpha: 0.18;
+  --accent-strong: 126 66 255;
+  --accent-foreground: 255 255 255;
+
+  --ring: 145 96 255;
+  --ring-alpha: 0.28;
+
+  --glow-a: 168 85 247;
+  --glow-b: 196 132 252;
+  --glow-c: 236 72 153;
+  --shadow-color: 76 29 149;
+}
+
+.dark {
+  --background: 18 12 35;
+  --background-elevated: 30 21 57;
+  --foreground: 240 236 255;
+
+  --card: 17 20 40;
+  --card-alpha: 0.72;
+  --card-strong: 25 29 58;
+  --card-strong-alpha: 0.94;
+
+  --border: 190 146 255;
+  --border-alpha: 0.24;
+
+  --muted: 209 196 239;
+  --muted-alpha: 0.82;
+
+  --accent: 196 161 255;
+  --accent-alpha: 0.22;
+  --accent-strong: 168 85 247;
+  --accent-foreground: 255 255 255;
+
+  --ring: 216 180 254;
+  --ring-alpha: 0.34;
+
+  --glow-a: 139 92 246;
+  --glow-b: 216 180 254;
+  --glow-c: 244 114 182;
+  --shadow-color: 15 23 42;
+}
+
+/* Color scheme */
+html {
+  color-scheme: light dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(900px 520px at -8% -10%, rgba(var(--glow-a), 0.18), transparent 60%),
+    radial-gradient(840px 480px at 108% 0%, rgba(var(--glow-b), 0.14), transparent 58%),
+    radial-gradient(780px 520px at 50% 100%, rgba(var(--glow-c), 0.12), transparent 60%),
+    linear-gradient(180deg, rgb(var(--background-elevated)) 0%, rgb(var(--background)) 42%, rgb(var(--background-elevated)) 100%);
+  color: rgb(var(--foreground));
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.03em;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* Background premium discret */
+.bg-app {
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(var(--glow-a), 0.16), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(var(--glow-b), 0.12), transparent 55%),
+    radial-gradient(900px 540px at 50% 100%, rgba(var(--glow-c), 0.1), transparent 58%),
+    linear-gradient(180deg, rgb(var(--background-elevated)), rgb(var(--background)));
+}
+
+.bg-grid {
+  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(var(--foreground), 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--foreground), 0.05) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 80%);
+}
+
+/* Selection & focus */
+::selection {
+  background: rgba(var(--accent), 0.18);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--ring), var(--ring-alpha));
+  border-radius: 10px;
+}
+
+/* Small utilities */
+.text-muted {
+  color: rgba(var(--muted), var(--muted-alpha));
+}
+
+.text-accent {
+  color: rgb(var(--accent-strong));
+}
+
+.border-soft {
+  border-color: rgba(var(--border), var(--border-alpha));
+}
+
+.card {
+  background:
+    linear-gradient(180deg, rgba(var(--card-strong), var(--card-strong-alpha)), rgba(var(--card), var(--card-alpha)));
+  border: 1px solid rgba(var(--border), var(--border-alpha));
+  border-radius: 16px;
+  box-shadow:
+    0 18px 40px -28px rgba(var(--shadow-color), 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.card-hover {
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.card-hover:hover {
+  border-color: rgba(var(--accent), 0.28);
+  box-shadow:
+    0 24px 50px -30px rgba(var(--shadow-color), 0.55),
+    0 0 0 1px rgba(var(--accent), 0.1);
+  transform: translateY(-2px);
+}
+
+.surface-soft {
+  background: rgba(var(--accent), 0.08);
+  border: 1px solid rgba(var(--border), calc(var(--border-alpha) + 0.02));
+}
+
+.surface-accent {
+  background:
+    linear-gradient(135deg, rgba(var(--accent), 0.18), rgba(var(--glow-c), 0.12));
+  border: 1px solid rgba(var(--accent), 0.22);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, rgb(var(--accent-strong)), rgb(var(--glow-a)));
+  color: rgb(var(--accent-foreground));
+  border: 1px solid rgba(var(--accent), 0.18);
+  box-shadow: 0 16px 32px -18px rgba(var(--accent-strong), 0.55);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 20px 36px -18px rgba(var(--accent-strong), 0.6);
+}
+
+.btn-secondary {
+  background: rgba(var(--card), 0.54);
+  color: rgb(var(--foreground));
+  border: 1px solid rgba(var(--border), var(--border-alpha));
+}
+
+.btn-secondary:hover {
+  background: rgba(var(--accent), 0.1);
+  border-color: rgba(var(--accent), 0.24);
+}
+
+.chip {
+  background:
+    linear-gradient(135deg, rgba(var(--accent), 0.14), rgba(var(--glow-b), 0.1));
+  border: 1px solid rgba(var(--border), var(--border-alpha));
+  color: rgba(var(--foreground), 0.82);
+}
+
+.eyebrow {
+  color: rgb(var(--accent-strong));
+}
+
+.section-divider {
+  border-color: rgba(var(--border), 0.12);
+}
+
+.nav-shell {
+  background:
+    linear-gradient(180deg, rgba(var(--card-strong), 0.82), rgba(var(--card), 0.68));
+  box-shadow: 0 14px 30px -24px rgba(var(--shadow-color), 0.45);
+}
+
+.link-soft {
+  color: rgba(var(--muted), var(--muted-alpha));
+}
+
+.link-soft:hover {
+  color: rgb(var(--foreground));
+}
+
+.link-accent {
+  text-decoration-color: rgba(var(--accent), 0.28);
+}
+
+.link-accent:hover {
+  color: rgb(var(--accent-strong));
+}
+
+.orb-a {
+  background: radial-gradient(circle, rgba(var(--glow-a), 0.28), transparent 68%);
+  animation: drift 16s ease-in-out infinite;
+}
+
+.orb-b {
+  background: radial-gradient(circle, rgba(var(--glow-b), 0.22), transparent 68%);
+  animation: drift 20s ease-in-out infinite reverse;
+}
+
+.orb-c {
+  background: radial-gradient(circle, rgba(var(--glow-c), 0.18), transparent 68%);
+  animation: drift 18s ease-in-out infinite;
+}
+
+@keyframes drift {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, 10px, 0) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .card-hover,
+  .btn-primary,
+  .orb-a,
+  .orb-b,
+  .orb-c {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Links */
+a {
+  text-decoration-color: rgba(var(--accent), 0.24);
+}
+
+/* Scrollbar */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(var(--foreground), 0.12);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
