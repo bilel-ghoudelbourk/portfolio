@@ -157,7 +157,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
-            className="mx-auto flex w-[85%] max-w-[340px] flex-col gap-4 pt-2 sm:w-[70%] lg:mx-0 lg:w-full lg:max-w-none"
+            className="flex flex-col gap-4 pt-2 sm:max-w-md sm:mx-auto lg:max-w-none lg:mx-0"
           >
             <div className="card card-hover p-4 sm:p-5">
               <div className="surface-accent relative aspect-[4/5] overflow-hidden rounded-2xl">
