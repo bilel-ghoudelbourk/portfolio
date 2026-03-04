@@ -43,7 +43,7 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="grid items-start gap-10 sm:grid-cols-[1.08fr_0.92fr]">
+        <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
           <div>
             <motion.p
               variants={fadeUp}
@@ -99,10 +99,10 @@ export function Hero() {
               initial="hidden"
               animate="show"
               custom={4}
-              className="mt-8 flex gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0"
+              className="mt-8 flex flex-col gap-4 lg:grid lg:grid-cols-3"
             >
               {roles.map((role) => (
-                <div key={role.label} className="card card-hover flex min-h-[140px] w-[72vw] shrink-0 flex-col justify-between p-5 sm:w-auto">
+                <div key={role.label} className="card card-hover flex min-h-[140px] flex-col justify-between p-5">
                   <p className="eyebrow text-[11px] font-semibold uppercase tracking-[0.22em]">
                     {role.label}
                   </p>
@@ -145,7 +145,7 @@ export function Hero() {
               initial="hidden"
               animate="show"
               custom={6}
-              className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-soft pt-8"
+              className="mt-12 grid max-w-xl grid-cols-3 gap-2 sm:gap-4 border-t border-soft pt-8"
             >
               <Stat k="Expérience" v="1 an+" />
               <Stat k="Projets" v="4 majeurs" />
@@ -157,7 +157,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
-            className="flex flex-col gap-4 pt-2"
+            className="mx-auto flex w-[85%] max-w-[340px] flex-col gap-4 pt-2 sm:w-[70%] lg:mx-0 lg:w-full lg:max-w-none"
           >
             <div className="card card-hover p-4 sm:p-5">
               <div className="surface-accent relative aspect-[4/5] overflow-hidden rounded-2xl">
