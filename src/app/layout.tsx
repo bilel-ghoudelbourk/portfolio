@@ -19,7 +19,7 @@ const display = Outfit({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0d091a" },
+    { media: "(prefers-color-scheme: light)", color: "#f8f3ff" },
     { media: "(prefers-color-scheme: dark)", color: "#0d091a" },
   ],
   colorScheme: "dark light",
