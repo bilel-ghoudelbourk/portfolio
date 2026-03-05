@@ -75,6 +75,8 @@ html.dark {
 }
 
 body {
+  background-color: #0d091a;
+  /* Fallback for Messenger webview */
   color: rgb(var(--foreground));
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;

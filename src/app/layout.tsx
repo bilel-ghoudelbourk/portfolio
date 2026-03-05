@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
@@ -16,6 +16,14 @@ const display = Outfit({
   subsets: ["latin"],
   variable: "--font-display",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0d091a" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d091a" },
+  ],
+  colorScheme: "dark light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
