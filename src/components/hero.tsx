@@ -35,7 +35,6 @@ const roles = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-14 pb-14 sm:pt-20">
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-[0.08] dark:opacity-20" />
       <div className="pointer-events-none absolute inset-0">
         <div className="orb-a absolute -top-24 left-[-120px] h-[380px] w-[380px] rounded-full blur-3xl" />
         <div className="orb-b absolute -top-28 right-[-140px] h-[420px] w-[420px] rounded-full blur-3xl" />

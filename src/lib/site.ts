@@ -16,5 +16,5 @@ export const siteConfig = {
   description:
     "Portfolio de projets en IA appliquée, data science, machine learning, LLMs, RAG, ingénierie et mise en production.",
   url: siteUrl,
-  ogImage: "/og-image.webp",
+  ogImage: "/og-image.png",
 };

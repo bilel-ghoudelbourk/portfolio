@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { siteConfig } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/react";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="bg-app">{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

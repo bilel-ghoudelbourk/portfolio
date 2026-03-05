@@ -75,16 +75,10 @@ html.dark {
 }
 
 body {
-  background:
-    radial-gradient(900px 520px at -8% -10%, rgba(var(--glow-a), 0.18), transparent 60%),
-    radial-gradient(840px 480px at 108% 0%, rgba(var(--glow-b), 0.14), transparent 58%),
-    radial-gradient(780px 520px at 50% 100%, rgba(var(--glow-c), 0.12), transparent 60%),
-    linear-gradient(180deg, rgb(var(--background-elevated)) 0%, rgb(var(--background)) 42%, rgb(var(--background-elevated)) 100%);
   color: rgb(var(--foreground));
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-attachment: fixed;
 }
 
 h1,
@@ -111,14 +105,6 @@ select {
     radial-gradient(900px 500px at 90% 0%, rgba(var(--glow-b), 0.12), transparent 55%),
     radial-gradient(900px 540px at 50% 100%, rgba(var(--glow-c), 0.1), transparent 58%),
     linear-gradient(180deg, rgb(var(--background-elevated)), rgb(var(--background)));
-}
-
-.bg-grid {
-  background-size: 32px 32px;
-  background-image:
-    linear-gradient(to right, rgba(var(--foreground), 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(var(--foreground), 0.05) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, black 30%, transparent 80%);
 }
 
 /* Selection & focus */
