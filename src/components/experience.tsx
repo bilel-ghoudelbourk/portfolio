@@ -4,7 +4,7 @@ import { TechnologyPill } from "@/components/technology-pill";
 
 const experiences = [
     {
-        title: "Développeur IA en alternance",
+        title: "Développeur IA",
         org: "Quadient",
         location: "Avignon, France",
         period: "Sept. 2024 — Août 2025",

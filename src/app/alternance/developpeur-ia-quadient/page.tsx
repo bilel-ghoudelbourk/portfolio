@@ -4,15 +4,15 @@ import { Section } from "@/components/section";
 import { ZoomableImage } from "@/components/zoomable-image";
 
 export const metadata: Metadata = {
-  title: "Développeur IA en alternance · Quadient",
+  title: "Développeur IA · Quadient",
   description:
-    "Détail des missions réalisées en alternance chez Quadient : application web, computer vision, géospatial, RAG multilingue et agent conversationnel.",
+    "Détail des missions réalisées chez Quadient : application web, computer vision, géospatial, RAG multilingue et agent conversationnel.",
 };
 
 export default function QuadientAlternancePage() {
   return (
     <Section
-      title="Développeur IA en alternance · Quadient"
+      title="Développeur IA · Quadient"
       subtitle="Alternance menée à Avignon entre septembre 2024 et août 2025, au sein de l'équipe Data/AI, sur des sujets mêlant développement logiciel, vision par ordinateur, géomatique, RAG et agents conversationnels."
     >
       <div className="space-y-8">

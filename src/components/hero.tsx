@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { Container } from "@/components/container";
+import { projects } from "@/data/projects";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 14 },
@@ -33,6 +34,8 @@ const roles = [
 ];
 
 export function Hero() {
+  const projectCount = projects.length;
+
   return (
     <section className="relative overflow-hidden pt-14 pb-14 sm:pt-20">
       <div className="pointer-events-none absolute inset-0">
@@ -125,6 +128,13 @@ export function Hero() {
               </Link>
 
               <Link
+                href="/alternance/developpeur-ia-quadient"
+                className="btn-secondary rounded-full px-4 py-2 text-sm font-medium transition-colors border-[rgb(var(--accent-strong))/0.2] hover:border-[rgb(var(--accent-strong))] hover:text-[rgb(var(--accent-strong))]"
+              >
+                Ma dernière expérience
+              </Link>
+
+              <Link
                 href="/contact"
                 className="btn-secondary rounded-full px-4 py-2 text-sm transition-colors"
               >
@@ -147,7 +157,7 @@ export function Hero() {
               className="mt-12 grid max-w-xl grid-cols-3 gap-2 sm:gap-4 border-t border-soft pt-8"
             >
               <Stat k="Expérience" v="1 an+" />
-              <Stat k="Projets" v="4 majeurs" />
+              <Stat k="Portfolio" v={`${projectCount} projets`} />
               <Stat k="Domaines" v="IA · Data · ML" />
             </motion.div>
           </div>

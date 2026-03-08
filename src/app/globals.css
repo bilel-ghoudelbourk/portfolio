@@ -225,10 +225,6 @@ select {
   box-shadow: 0 14px 30px -24px rgba(var(--shadow-color), 0.45);
 }
 
-.link-soft {
-  color: rgba(var(--muted), var(--muted-alpha));
-}
-
 .link-soft:hover {
   color: rgb(var(--foreground));
 }

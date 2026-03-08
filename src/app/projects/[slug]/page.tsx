@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const details: Record<string, React.ReactNode> = {
+    "quixo-game": <QuixoGameDetail />,
     "detection-comportementale-langage-naturel": <BehavioralNlpDetail />,
     "prediction-niveaux-nappes-lstm": <GroundwaterLstmDetail />,
     "fusion-images-satellites-transformers": <FusionDetail />,
@@ -80,7 +81,13 @@ export default async function ProjectDetailPage({ params }: Props) {
                     </div>
                 ) : null}
 
-                <div>
+                <div className="flex flex-wrap gap-4">
+                    <Link
+                        href="/"
+                        className="text-sm text-neutral-400 underline decoration-black/20 underline-offset-4 hover:text-neutral-900 dark:text-white/50 dark:decoration-white/20 dark:hover:text-white"
+                    >
+                        ← Retour à l&apos;accueil
+                    </Link>
                     <Link
                         href="/projects"
                         className="text-sm text-neutral-400 underline decoration-black/20 underline-offset-4 hover:text-neutral-900 dark:text-white/50 dark:decoration-white/20 dark:hover:text-white"
@@ -90,6 +97,72 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </div>
             </div>
         </Section>
+    );
+}
+
+function QuixoGameDetail() {
+    return (
+        <div className="space-y-6">
+            <DetailBlock title="Le Projet">
+                <p>
+                    <strong>Quixo</strong> est un célèbre jeu de plateau abstrait se déroulant sur une grille de 5x5 cases.
+                    L&apos;objectif est d&apos;aligner 5 cubes à sa marque (croix ou rond) avant son adversaire. Ce projet
+                    consiste en une implémentation complète du jeu en <strong>Python</strong>, dotée d&apos;une interface graphique
+                    intuitive et élégante développée avec <strong>Tkinter</strong>.
+                </p>
+            </DetailBlock>
+
+            <DetailBlock title="Fonctionnalités & IA">
+                <p>
+                    Le jeu offre une expérience fluide avec deux modes de jeu distincts :
+                </p>
+                <ul className="mt-3 space-y-2">
+                    <li>
+                        <span className="font-medium text-neutral-800 dark:text-white/90">Multijoueur local :</span>{" "}
+                        Pour affronter un ami sur le même écran, avec une gestion rigoureuse des tours et des règles de déplacement complexes.
+                    </li>
+                    <li>
+                        <span className="font-medium text-neutral-800 dark:text-white/90">Mode Solo (Intelligence Artificielle) :</span>{" "}
+                        Le joueur peut se mesurer à une IA performante. L&apos;IA repose sur l&apos;algorithme <strong>Minimax</strong>,
+                        optimisé par l&apos;<strong>élagage Alpha-Beta</strong>, permettant d&apos;analyser l&apos;arbre des coups futurs et d&apos;anticiper
+                        efficacement les stratégies adverses.
+                    </li>
+                </ul>
+            </DetailBlock>
+
+            <DetailBlock title="Architecture Code & Design Patterns">
+                <p>
+                    La base de code a été pensée pour être extensible et robuste, s&apos;appuyant sur plusieurs design patterns classiques :
+                </p>
+                <ul className="mt-3 space-y-2">
+                    <li>
+                        <strong>MVC (Modèle-Vue-Contrôleur) :</strong> Séparation stricte entre la logique mathématique du plateau,
+                        la gestion des événements utilisateurs et l&apos;interface visuelle.
+                    </li>
+                    <li>
+                        <strong>State (État) :</strong> Utilisé pour orchestrer proprement le cycle de jeu (tour de chaque joueur, écrans de victoire ou de match nul).
+                    </li>
+                    <li>
+                        <strong>Factory (Fabrique) :</strong> Automatise et centralise la création des différentes variantes de cubes sur le plateau.
+                    </li>
+                    <li>
+                        <strong>Prototype :</strong> Indispensable pour permettre à l&apos;IA de simuler des plateaux futurs via le clonage d&apos;objets sans altérer la partie en cours.
+                    </li>
+                </ul>
+            </DetailBlock>
+
+            <DetailBlock title="Qualité & CI/CD" highlight>
+                <p>
+                    Pour garantir la stabilité du jeu et éviter toute régression dans la logique particulièrement sensible du calcul
+                    des déplacements (glissement des rangées ou colonnes), une approche rigoureuse a été adoptée :
+                </p>
+                <ul className="mt-3 space-y-2">
+                    <li>Couverture de code à <strong>100%</strong> sur la logique applicative via <strong>Pytest</strong>.</li>
+                    <li>Mise en place d&apos;une pipeline d&apos;intégration continue (<strong>GitHub Actions</strong>) automatisant
+                        l&apos;exécution des tests à chaque modification du dépôt.</li>
+                </ul>
+            </DetailBlock>
+        </div>
     );
 }
 

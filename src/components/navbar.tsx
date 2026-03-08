@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const nav = [
   { href: "/", label: "Accueil" },
+  { href: "/alternance/developpeur-ia-quadient", label: "Expérience" },
   { href: "/projects", label: "Projets" },
   { href: "/contact", label: "Contact" },
 ];
