@@ -33,7 +33,7 @@ export default function HomePage() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/projects"
-            className="inline-flex items-center justify-center rounded-full bg-[rgb(var(--accent-strong))] px-6 py-3 text-sm font-medium text-white shadow-sm transition-all hover:bg-[rgb(var(--accent-strong))/0.9] hover:shadow-md active:scale-[0.98]"
+            className="btn-primary rounded-full px-6 py-3 text-sm font-medium transition-all"
           >
             Voir tous les projets
           </Link>
