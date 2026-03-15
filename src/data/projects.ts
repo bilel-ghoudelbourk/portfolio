@@ -2,6 +2,26 @@ import type { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
+    slug: "apply-ai",
+    title: "ApplyAI : assistant IA local-first pour les candidatures",
+    summary:
+      "Application full stack en Python/FastAPI et Next.js pour centraliser l'analyse de CV, le matching avec une offre, la génération de lettres de motivation et la recherche d'annonces en direct avec scraping Playwright et support multi-LLM.",
+    year: "2026",
+    tags: ["Python", "FastAPI", "Next.js", "Playwright", "LangChain", "Ollama"],
+    featured: true,
+    image: "/projects/apply-ai/01-landing-screen.png",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/bilel-ghoudelbourk/ApplyAI",
+      },
+      {
+        label: "Démo Live",
+        href: "https://apply-ai-demo.vercel.app/",
+      },
+    ],
+  },
+  {
     slug: "detection-comportementale-langage-naturel",
     title: "Détection automatique de traits comportementaux en langage naturel",
     summary:

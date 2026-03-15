@@ -1,12 +1,18 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { BrandIcon } from "@/components/brand-icon";
+import { BrandIcon, resolveBrandIcon } from "@/components/brand-icon";
 import { TechnologyPill } from "@/components/technology-pill";
 import { projects } from "@/data/projects";
 import { Section } from "@/components/section";
+import { ZoomableImage } from "@/components/zoomable-image";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ slug: string }> };
+type DetailImage = {
+    src: string;
+    alt: string;
+    caption?: string;
+};
 
 export async function generateStaticParams() {
     return projects.map((p) => ({ slug: p.slug }));
@@ -23,12 +29,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const details: Record<string, React.ReactNode> = {
+    "apply-ai": <ApplyAiDetail />,
     "quixo-game": <QuixoGameDetail />,
     "detection-comportementale-langage-naturel": <BehavioralNlpDetail />,
     "prediction-niveaux-nappes-lstm": <GroundwaterLstmDetail />,
     "fusion-images-satellites-transformers": <FusionDetail />,
     "systeme-recherche-information": <InformationRetrievalDetail />,
 };
+
+const applyAiScreenshots: DetailImage[] = [
+    {
+        src: "/projects/apply-ai/01-landing-screen.png",
+        alt: "Écran d'accueil d'ApplyAI",
+        caption: "Écran d'accueil de l'application et entrée dans le workflow de candidature.",
+    },
+    {
+        src: "/projects/apply-ai/02-workflow-selection.png",
+        alt: "Sélection du workflow après upload du CV",
+        caption: "Une fois le CV importé, l'utilisateur choisit entre analyse d'offre et recherche d'annonces.",
+    },
+    {
+        src: "/projects/apply-ai/03-analyze-offer.png",
+        alt: "Interface d'analyse d'offre",
+        caption: "Analyse d'une offre collée ou importée depuis un document pour calculer le matching.",
+    },
+    {
+        src: "/projects/apply-ai/04-search-form.png",
+        alt: "Formulaire de recherche d'annonces",
+        caption: "Recherche multi-critères d'annonces avant scraping et scoring.",
+    },
+    {
+        src: "/projects/apply-ai/05-search-results.png",
+        alt: "Résultats de recherche d'annonces",
+        caption: "Résultats récupérés en direct, prêts à être reclassés par adéquation avec le CV.",
+    },
+    {
+        src: "/projects/apply-ai/06-match-result.png",
+        alt: "Résultat de matching CV-offre",
+        caption: "Restitution du score, des compétences alignées et des écarts à combler.",
+    },
+    {
+        src: "/projects/apply-ai/07-cover-letter.png",
+        alt: "Lettre de motivation générée",
+        caption: "Génération d'une lettre de motivation adaptée au poste visé.",
+    },
+];
 
 export default async function ProjectDetailPage({ params }: Props) {
     const { slug } = await params;
@@ -37,7 +82,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
     const content = details[project.slug] ?? (
         <div className="rounded-2xl border border-black/10 bg-black/5 p-8 text-center text-neutral-400 dark:border-white/10 dark:bg-white/5 dark:text-white/40">
-            <p className="text-sm">Contenu détaillé à venir...</p>
+            <p className="text-sm">Contenu détaillé à venir.</p>
         </div>
     );
 
@@ -72,9 +117,13 @@ export default async function ProjectDetailPage({ params }: Props) {
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm text-neutral-600 hover:bg-black/5 hover:text-neutral-900 dark:border-white/15 dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white"
                             >
-                                {l.label === "GitHub" ? (
-                                    <BrandIcon name="github" size={16} monochrome className="shrink-0" />
-                                ) : null}
+                                {(() => {
+                                    const iconName = resolveBrandIcon(l.label);
+                                    if (iconName) {
+                                        return <BrandIcon name={iconName} size={16} monochrome className="shrink-0" />;
+                                    }
+                                    return null;
+                                })()}
                                 {l.label} ↗
                             </a>
                         ))}
@@ -97,6 +146,144 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </div>
             </div>
         </Section>
+    );
+}
+
+function ApplyAiDetail() {
+    return (
+        <div className="space-y-6">
+            <ApplyAiSection title="Introduction">
+                <p>
+                    <strong>ApplyAI</strong> est une application full stack d&apos;aide à la candidature qui prend un CV
+                    comme point d&apos;entrée, le transforme en profil exploitable, puis l&apos;utilise pour analyser des offres,
+                    calculer un score d&apos;adéquation, générer une lettre de motivation et rechercher des annonces en ligne.
+                    L&apos;objectif n&apos;est pas seulement de produire un score, mais de couvrir un vrai flux utilisateur de bout en bout.
+                </p>
+                <p>
+                    Le backend est construit avec <strong>FastAPI</strong>, <strong>Pydantic</strong> et <strong>Uvicorn</strong>.
+                    Le code y est découpé en modules métier bien séparés: <strong>CVParser</strong> extrait les informations du CV,
+                    <strong>CVCacheStore</strong> met en cache le profil à partir d&apos;un hash du document, <strong>MatchingEngine</strong>
+                    calcule le score et les compétences manquantes, <strong>DocumentGenerator</strong> produit la lettre de motivation,
+                    et les modules de scraping gèrent la découverte puis l&apos;analyse de nouvelles offres.
+                </p>
+                <p>
+                    Pour l&apos;ingestion de documents, le projet s&apos;appuie notamment sur <strong>pdfplumber</strong>,
+                    <strong>PyMuPDF</strong>, <strong>Pillow</strong> et <strong>RapidOCR</strong> pour extraire du texte depuis plusieurs formats.
+                    La recherche d&apos;annonces combine <strong>Playwright</strong> et <strong>BeautifulSoup4</strong> afin de récupérer des contenus
+                    sur des job boards dynamiques. La couche LLM passe par <strong>LangChain</strong>, avec prise en charge d&apos;<strong>Ollama</strong>,
+                    <strong>OpenAI</strong> et <strong>Groq</strong> selon le mode d&apos;exécution voulu.
+                </p>
+                <p>
+                    Le frontend repose sur <strong>Next.js 16</strong>, <strong>React 19</strong>, <strong>Tailwind CSS 4</strong>,
+                    <strong>Framer Motion</strong> et <strong>Lucide React</strong>. La page principale pilote d&apos;abord l&apos;upload du CV,
+                    puis ouvre deux parcours distincts: l&apos;analyse d&apos;une offre précise et la recherche d&apos;annonces. Les appels réseau sont
+                    centralisés dans un client API dédié, ce qui garde le code lisible et sépare clairement l&apos;interface du traitement backend.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Écran d'accueil" image={applyAiScreenshots[0]}>
+                <p>
+                    Cette première vue pose le cadre produit. L&apos;application se présente comme un assistant de candidature
+                    centré sur le CV, avec une entrée simple et directe dans le parcours utilisateur.
+                </p>
+                <p>
+                    Le choix d&apos;une interface très lisible est important ici: l&apos;utilisateur comprend immédiatement
+                    que le système n&apos;attend pas une configuration complexe, mais un document de départ à partir duquel
+                    tout le reste du pipeline sera alimenté. Cette capture reflète donc bien la logique produit générale,
+                    qui consiste à réduire la friction dès le premier écran.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Choix du parcours" image={applyAiScreenshots[1]}>
+                <p>
+                    Une fois le CV importé, l&apos;interface propose un embranchement clair entre deux usages: analyser une offre
+                    déjà connue ou partir en recherche d&apos;annonces. Cette séparation structure bien le produit et évite un écran
+                    unique trop chargé.
+                </p>
+                <p>
+                    D&apos;un point de vue logiciel, ce découpage est aussi pertinent côté code: chaque parcours peut appeler des
+                    endpoints et des composants spécialisés sans mélanger les responsabilités. L&apos;expérience reste plus propre
+                    pour l&apos;utilisateur, et l&apos;architecture de l&apos;application reste plus simple à faire évoluer.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Analyse d'une offre" image={applyAiScreenshots[2]}>
+                <p>
+                    Cette vue sert à injecter le contenu d&apos;une offre, soit en texte brut, soit via un fichier. Le backend extrait,
+                    nettoie et normalise ensuite les informations pertinentes pour comparer cette offre avec le profil issu du CV.
+                </p>
+                <p>
+                    C&apos;est une étape clé, car elle transforme une offre parfois désordonnée en données plus structurées:
+                    compétences attendues, contexte du poste, éléments de langage utiles au scoring et à la génération documentaire.
+                    Le projet montre ici comment relier ingestion documentaire, parsing métier et exploitation par un moteur de matching.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Formulaire de recherche" image={applyAiScreenshots[3]}>
+                <p>
+                    Ici, l&apos;utilisateur configure la prospection: mots-clés, localisation, ancienneté, sources et volume de résultats.
+                    Cette étape pilote la couche de découverte d&apos;offres avant l&apos;analyse plus fine.
+                </p>
+                <p>
+                    Ce formulaire n&apos;est pas un simple filtre visuel: il commande en réalité une phase de collecte pilotée par scraping,
+                    ce qui permet d&apos;aller chercher des annonces réellement proches d&apos;un objectif donné. Cela donne au projet une dimension
+                    plus opérationnelle qu&apos;un outil limité à l&apos;analyse manuelle d&apos;une seule offre.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Résultats de recherche" image={applyAiScreenshots[4]}>
+                <p>
+                    Les offres récupérées sont présentées comme une liste exploitable qui peut ensuite être triée par pertinence.
+                    Le projet ne se contente donc pas de scraper: il prépare une base utile pour décider où concentrer ses candidatures.
+                </p>
+                <p>
+                    Cette partie est importante parce qu&apos;elle introduit une logique de priorisation. Au lieu de laisser l&apos;utilisateur
+                    parcourir manuellement chaque annonce, l&apos;application prépare un ensemble d&apos;offres candidates qui pourront ensuite être
+                    réévaluées, comparées et utilisées comme point de départ pour une candidature plus ciblée.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Résultat du matching" image={applyAiScreenshots[5]}>
+                <p>
+                    Cette section montre la sortie analytique principale: score de compatibilité, compétences alignées,
+                    compétences manquantes et lecture synthétique du résultat. C&apos;est la partie qui transforme l&apos;analyse
+                    technique en aide à la décision.
+                </p>
+                <p>
+                    Le résultat n&apos;est pas seulement décoratif: il sert à comprendre rapidement pourquoi une candidature est forte ou faible.
+                    On voit ici la valeur concrète du moteur de matching, qui rapproche les informations extraites du CV et de l&apos;offre pour
+                    produire un diagnostic exploitable plutôt qu&apos;une simple réponse opaque.
+                </p>
+            </ApplyAiSection>
+
+            <ApplyAiSection title="Lettre de motivation générée" image={applyAiScreenshots[6]}>
+                <p>
+                    À partir du CV et de l&apos;offre, l&apos;application produit une lettre contextualisée. Le projet enchaîne donc
+                    l&apos;analyse avec une sortie rédactionnelle directement exploitable, ce qui rapproche l&apos;outil d&apos;un usage réel.
+                </p>
+                <p>
+                    Cette étape montre bien que le projet ne s&apos;arrête pas à l&apos;évaluation. Il pousse la logique jusqu&apos;à la
+                    production d&apos;un contenu utile dans un vrai scénario de candidature, en reliant score, contexte du poste et informations
+                    du profil dans une sortie rédigée qui peut être relue puis adaptée avant envoi.
+                </p>
+            </ApplyAiSection>
+
+            <DetailBlock title="Conclusion et piste d'amélioration" highlight>
+                <p>
+                    ApplyAI montre une approche complète de l&apos;IA appliquée au développement logiciel: ingestion documentaire,
+                    extraction d&apos;information, matching, génération de contenu et scraping sont réunis dans une seule application
+                    cohérente. Le projet ne présente pas un composant isolé, mais un vrai produit utilisable de bout en bout pour
+                    accélérer et mieux cibler une candidature.
+                </p>
+                <p>
+                    Une piste d&apos;amélioration naturelle serait d&apos;ajouter un <strong>agent autonome de candidature</strong> capable,
+                    à partir d&apos;un seuil de score, de sélectionner les meilleures offres, remplir automatiquement les formulaires,
+                    téléverser les bons documents et soumettre la candidature presque sans intervention. Techniquement, cette évolution
+                    prolongerait très bien l&apos;architecture actuelle en combinant le moteur de matching, la génération documentaire,
+                    la navigation web automatisée et une couche de décision agentique pour postuler directement tout seul.
+                </p>
+            </DetailBlock>
+        </div>
     );
 }
 
@@ -512,7 +699,70 @@ function InformationRetrievalDetail() {
     );
 }
 
-function DetailBlock({ title, children, highlight }: { title: string; children: React.ReactNode; highlight?: boolean }) {
+function ApplyAiSection({
+    title,
+    image,
+    children,
+}: {
+    title: string;
+    image?: DetailImage;
+    children: React.ReactNode;
+}) {
+    const displayImages = image ? [image] : [];
+
+    return (
+        <div className="card p-6 sm:p-8">
+            <h2 className="mb-6 text-lg font-semibold tracking-tight text-neutral-900 dark:text-white">
+                {title}
+            </h2>
+            <div className={`grid gap-8 ${displayImages.length > 0 ? "lg:grid-cols-[1fr_0.85fr]" : ""} items-start`}>
+                <div className="space-y-4 text-sm leading-relaxed text-neutral-600 dark:text-white/75">
+                    {children}
+                </div>
+
+                {displayImages.length > 0 && (
+                    <div className="space-y-6">
+                        {displayImages.map((img) => (
+                            <figure
+                                key={img.src}
+                                className="group overflow-hidden rounded-2xl border border-black/10 bg-neutral-50/50 dark:border-white/10 dark:bg-white/5"
+                            >
+                                <div className="p-3">
+                                    <ZoomableImage
+                                        src={img.src}
+                                        alt={img.alt}
+                                        width={800}
+                                        height={600}
+                                        className="h-auto w-full rounded-xl object-contain shadow-[0_0_15px_rgba(0,0,0,0.05)] transition-transform duration-500 group-hover:scale-[1.02] dark:shadow-none"
+                                    />
+                                </div>
+                                {img.caption ? (
+                                    <figcaption className="border-t border-black/5 bg-white px-4 py-3 text-[13px] leading-relaxed text-neutral-500 dark:border-white/5 dark:bg-white/5 dark:text-white/60">
+                                        {img.caption}
+                                    </figcaption>
+                                ) : null}
+                            </figure>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+function DetailBlock({
+    title,
+    children,
+    highlight,
+    images,
+}: {
+    title: string;
+    children: React.ReactNode;
+    highlight?: boolean;
+    images?: DetailImage[];
+}) {
+    const hasImages = Boolean(images?.length);
+
     return (
         <div className={`rounded-2xl border p-6 ${highlight
             ? 'border-[rgba(var(--accent),0.35)] bg-[rgba(var(--accent),0.07)] dark:bg-[rgba(var(--accent),0.1)]'
@@ -524,7 +774,35 @@ function DetailBlock({ title, children, highlight }: { title: string; children: 
                 }`}>
                 {title}
             </h3>
-            <div className="space-y-2 text-sm leading-relaxed text-neutral-600 dark:text-white/75">{children}</div>
+            <div className={hasImages ? "grid gap-6 xl:grid-cols-[1fr_0.95fr] xl:items-start" : undefined}>
+                <div className="space-y-2 text-sm leading-relaxed text-neutral-600 dark:text-white/75">{children}</div>
+
+                {images?.length ? (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                        {images.map((image) => (
+                            <figure
+                                key={image.src}
+                                className="overflow-hidden rounded-2xl border border-black/10 bg-white/70 dark:border-white/10 dark:bg-white/5"
+                            >
+                                <div className="p-3">
+                                    <ZoomableImage
+                                        src={image.src}
+                                        alt={image.alt}
+                                        width={1600}
+                                        height={900}
+                                        className="h-auto w-full rounded-xl object-cover"
+                                    />
+                                </div>
+                                {image.caption ? (
+                                    <figcaption className="border-t border-black/5 px-4 py-3 text-[13px] leading-relaxed text-neutral-500 dark:border-white/5 dark:text-white/60">
+                                        {image.caption}
+                                    </figcaption>
+                                ) : null}
+                            </figure>
+                        ))}
+                    </div>
+                ) : null}
+            </div>
         </div>
     );
 }

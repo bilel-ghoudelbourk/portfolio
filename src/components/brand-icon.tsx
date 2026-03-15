@@ -17,6 +17,7 @@ import {
   siPytorch,
   siReact,
   siScikitlearn,
+  siVercel,
 } from "simple-icons";
 
 type BrandIconName =
@@ -38,7 +39,8 @@ type BrandIconName =
   | "python"
   | "pytorch"
   | "react"
-  | "scikitlearn";
+  | "scikitlearn"
+  | "vercel";
 
 type IconDefinition = {
   hex: string;
@@ -72,6 +74,7 @@ const brandIcons: Record<BrandIconName, IconDefinition> = {
   pytorch: siPytorch,
   react: siReact,
   scikitlearn: siScikitlearn,
+  vercel: siVercel,
 };
 
 const directAliases: Record<string, BrandIconName> = {
@@ -95,6 +98,8 @@ const directAliases: Record<string, BrandIconName> = {
   PyTorch: "pytorch",
   React: "react",
   "Scikit-learn": "scikitlearn",
+  "Démo Live": "vercel",
+  Site: "vercel",
 };
 
 export function resolveBrandIcon(label: string): BrandIconName | null {

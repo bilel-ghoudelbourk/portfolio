@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BrandIcon } from "@/components/brand-icon";
+import { BrandIcon, resolveBrandIcon } from "@/components/brand-icon";
 import { TechnologyPill } from "@/components/technology-pill";
 import type { Project } from "@/types/project";
 
 export function ProjectCard({ project }: { project: Project }) {
+  const showImage = Boolean(project.image) && project.slug !== "apply-ai";
+
   return (
     <article className="card card-hover group flex h-full flex-col p-6 transition-colors">
       <Link href={`/projects/${project.slug}`} className="block">
-        {project.image ? (
+        {showImage ? (
           <div className="surface-accent relative mb-5 aspect-[16/9] overflow-hidden rounded-xl">
             <Image
-              src={project.image}
+              src={project.image!}
               alt={project.title}
               fill
               className="object-cover"
@@ -57,9 +59,13 @@ export function ProjectCard({ project }: { project: Project }) {
             rel="noreferrer"
             className="link-accent inline-flex items-center gap-2 transition-colors"
           >
-            {link.label === "GitHub" ? (
-              <BrandIcon name="github" size={15} monochrome className="shrink-0" />
-            ) : null}
+            {(() => {
+              const iconName = resolveBrandIcon(link.label);
+              if (iconName) {
+                return <BrandIcon name={iconName} size={15} monochrome className="shrink-0" />;
+              }
+              return null;
+            })()}
             {link.label} <span className="text-muted ml-0.5 opacity-70">↗</span>
           </a>
         ))}

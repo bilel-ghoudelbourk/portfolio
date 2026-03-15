@@ -8,7 +8,15 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 
 export default function HomePage() {
-  const featured = projects.filter((p) => p.featured).slice(0, 4);
+  const featuredSlugs = [
+    "apply-ai",
+    "quixo-game",
+    "detection-comportementale-langage-naturel",
+    "prediction-niveaux-nappes-lstm",
+  ];
+  const featured = featuredSlugs
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter((project): project is (typeof projects)[number] => project !== undefined);
 
   return (
     <>
